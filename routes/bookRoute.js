@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bookModel = require('../model/books')
-
 // CRUD ROUTE
 
-router.post('/', (req, res)=>{
+ router.post('/', (req, res)=>{
 const book = req.body
 
 bookModel.create(book)
@@ -23,7 +22,7 @@ console.log(book)
 router.get('/', (req, res)=>{
  bookModel.find({})
  .then((books)=>{
-    res.status(201).send(books)
+    res.render('books', {books, user: req.user})
  })
  .catch((err)=>{
     res.status(400).send(err)
@@ -31,11 +30,13 @@ router.get('/', (req, res)=>{
 
 })
 
+
 router.get('/:id', (req, res)=>{
     const id = req.params.id
 bookModel.findById(id)
 .then((book)=>{
-    res.status(201).send(book)
+   
+    res.render('book',{})
 })
 .catch((err)=>{
     res.status(400).send(err)
